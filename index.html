@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SABOT HOSPITAL SYSTEM - Full Print Edition</title>
+    <title>SABOT HOSPITAL SYSTEM - Editable Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -18,11 +18,14 @@
 
         body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; overflow: hidden; color: #333; }
 
-        /* --- LAYOUT --- */
+        /* --- LOGIN SCREEN --- */
         #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #007bff, #00d2ff); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .login-box { background: white; padding: 3rem; border-radius: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); width: 400px; text-align: center; }
-        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: 'Sarabun'; }
+        .login-box { background: white; padding: 3rem; border-radius: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); width: 400px; text-align: center; position: relative; }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: 'Sarabun'; font-size: 1rem; }
+        .forgot-pass { color: var(--primary); font-size: 0.9rem; cursor: pointer; margin-top: 15px; display: inline-block; text-decoration: underline; }
+        .forgot-pass:hover { color: var(--primary-dark); }
         
+        /* --- MAIN APP LAYOUT --- */
         #app-container { display: none; display: flex; height: 100vh; }
         .sidebar { width: 260px; background: var(--dark); color: white; display: flex; flex-direction: column; }
         .brand { padding: 25px; text-align: center; font-size: 1.4rem; font-weight: bold; color: #4facfe; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -41,18 +44,16 @@
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: 'Sarabun'; }
 
         /* BUTTONS */
-        .btn { padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-family: 'Sarabun'; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn { padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-family: 'Sarabun'; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-print { background: #6f42c1; color: white; } /* สีม่วงสำหรับปุ่มปริ้นท์ */
-        .btn-print:hover { background: #5a32a3; }
+        .btn-print { background: #6f42c1; color: white; }
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
         .btn-group { display: flex; gap: 10px; justify-content: flex-end; }
 
-        /* TABLES & FILTERS */
+        /* TABLES */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { padding: 12px 15px; border-bottom: 1px solid #eee; text-align: left; }
         th { background-color: #f1f3f5; font-weight: 700; color: #495057; }
-        .filter-bar { background: #f8f9fa; padding: 15px; border-radius: 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border: 1px solid #e9ecef; }
         .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; color: white; font-weight: 600; }
         .bg-green { background: var(--success); } .bg-red { background: var(--danger); } .bg-blue { background: var(--primary); }
 
@@ -63,9 +64,9 @@
         .btn-med { background: linear-gradient(45deg, #11998e, #38ef7d); }
         .btn-surg { background: linear-gradient(45deg, #cb2d3e, #ef473a); }
         .btn-trans { background: linear-gradient(45deg, #f09819, #ffc107); color: #333; }
+        .filter-bar { background: #f8f9fa; padding: 15px; border-radius: 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border: 1px solid #e9ecef; }
 
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -74,14 +75,19 @@
         <div class="login-box">
             <i class="fas fa-hospital-symbol fa-4x" style="color:var(--primary); margin-bottom:20px;"></i>
             <h2>SABOT HOSPITAL</h2>
-            <input type="text" id="username" placeholder="Username (sabothospital...)" value="sabothospital1">
-            <input type="password" id="password" placeholder="Password" value="0000">
+            <p style="color:#777; font-size:0.9rem;">กรุณาเข้าสู่ระบบ</p>
+            
+            <input type="text" id="username" placeholder="Username" >
+            <input type="password" id="password" placeholder="Password">
+            
             <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="login()">เข้าสู่ระบบ</button>
-            <p id="login-error" style="color:red; margin-top:10px;"></p>
+            <p id="login-error" style="color:red; margin-top:10px; height:20px; font-size:0.9rem;"></p>
+            
+            <p class="forgot-pass" onclick="forgotPasswordLogic()">ลืมรหัสผ่าน / ปลดล็อคระบบ</p>
         </div>
     </div>
 
-    <div id="app-container" style="display:none;">
+    <div id="app-container">
         <nav class="sidebar">
             <div class="brand">SABOT HIS</div>
             <div class="menu-list">
@@ -93,9 +99,12 @@
                 <a class="menu-item" onclick="nav('shift')"><i class="fas fa-clock"></i> 5-6. เข้า/ออกเวร</a>
                 <a class="menu-item" onclick="nav('transfer')"><i class="fas fa-ambulance"></i> 7. ย้ายผู้ป่วย</a>
                 <a class="menu-item" onclick="nav('logs')"><i class="fas fa-history"></i> บันทึก & รายงาน</a>
-                <a class="menu-item" onclick="nav('settings')"><i class="fas fa-cogs"></i> ตั้งค่า</a>
+                <a class="menu-item" onclick="nav('settings')"><i class="fas fa-cogs"></i> ตั้งค่าระบบ</a>
             </div>
-            <div style="padding:20px;"><button class="btn btn-danger" style="width:100%;" onclick="logout()">Logout</button></div>
+            <div style="padding:20px;">
+                <div style="margin-bottom:10px; font-size:0.8rem; color:#aaa;">User: <span id="sidebar-user"></span></div>
+                <button class="btn btn-danger" style="width:100%;" onclick="logout()">ออกจากระบบ</button>
+            </div>
         </nav>
 
         <main class="main-content">
@@ -125,14 +134,18 @@
                         </div>
                     </div>
                     <div class="form-group"><label>ชื่อ-นามสกุล</label><input type="text" id="pt-name"></div>
-                    <div class="form-group"><label>ที่อยู่</label><textarea id="pt-address" readonly style="background:#f4f4f4;"></textarea></div>
+                    
+                    <div class="form-group">
+                        <label>ที่อยู่ (พิมพ์เองได้ หรือกดดึงข้อมูล)</label>
+                        <textarea id="pt-address" rows="3" placeholder="กรอกที่อยู่ หรือ กดปุ่มดึงข้อมูล..."></textarea>
+                    </div>
+
                     <div class="form-group"><label>อาการ</label><textarea id="pt-symptom"></textarea></div>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-print" onclick="printPatient()"><i class="fas fa-print"></i> พิมพ์บัตร/ใบประวัติ</button>
+                    <button class="btn btn-print" onclick="printPatient()"><i class="fas fa-print"></i> พิมพ์บัตร</button>
                     <button class="btn btn-primary" onclick="savePatient()"><i class="fas fa-save"></i> บันทึกข้อมูล</button>
                 </div>
-                
                 <div id="patient-actions" style="display:none; margin-top:30px; border-top:2px dashed #ccc; padding-top:20px;">
                     <h4 style="text-align:center;">ดำเนินการต่อ:</h4>
                     <div class="action-bar">
@@ -157,8 +170,8 @@
                     <div class="form-group"><label>จำนวน</label><input type="number" id="med-qty"></div>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-print" onclick="printMedLabel()"><i class="fas fa-print"></i> พิมพ์ฉลากยา</button>
-                    <button class="btn btn-primary" onclick="actionPrescribe()"><i class="fas fa-check"></i> บันทึกจ่ายยา</button>
+                    <button class="btn btn-print" onclick="printMedLabel()"><i class="fas fa-print"></i> พิมพ์ฉลาก</button>
+                    <button class="btn btn-primary" onclick="actionPrescribe()">บันทึกจ่ายยา</button>
                 </div>
             </div>
 
@@ -184,8 +197,8 @@
                     <div class="form-group"><label>ห้อง</label><select id="surg-room"><option>OR-1</option><option>OR-2</option></select></div>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-print" onclick="printSurgery()"><i class="fas fa-print"></i> พิมพ์ใบนัดผ่าตัด</button>
-                    <button class="btn btn-primary" onclick="actionSurgery()"><i class="fas fa-calendar-check"></i> จองห้องผ่าตัด</button>
+                    <button class="btn btn-print" onclick="printSurgery()"><i class="fas fa-print"></i> พิมพ์ใบนัด</button>
+                    <button class="btn btn-primary" onclick="actionSurgery()">จองห้องผ่าตัด</button>
                 </div>
             </div>
 
@@ -206,28 +219,26 @@
                     </div>
                 </div>
                 <div class="form-grid">
-                    <div class="form-group"><label>รพ. ปลายทาง</label><input type="text" id="trans-dest" placeholder="เช่น รพ.ศูนย์..."></div>
+                    <div class="form-group"><label>รพ. ปลายทาง</label><input type="text" id="trans-dest"></div>
                     <div class="form-group"><label>สาเหตุ/อาการ</label><input type="text" id="trans-reason"></div>
                 </div>
                 <div class="btn-group">
                     <button class="btn btn-print" onclick="printRefer()"><i class="fas fa-print"></i> พิมพ์ใบส่งตัว</button>
-                    <button class="btn btn-primary" onclick="actionTransfer()"><i class="fas fa-file-export"></i> สร้างใบส่งตัว</button>
+                    <button class="btn btn-primary" onclick="actionTransfer()">สร้างใบส่งตัว</button>
                 </div>
             </div>
 
             <div id="logs" class="card">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h3><i class="fas fa-list-alt"></i> บันทึก & รายงาน</h3>
-                    <button class="btn btn-print" onclick="printLogReport()"><i class="fas fa-print"></i> พิมพ์รายงานหน้านี้</button>
+                    <button class="btn btn-print" onclick="printLogReport()"><i class="fas fa-print"></i> พิมพ์รายงาน</button>
                 </div>
-                
                 <div class="filter-bar">
                     <select id="log-view-type" onchange="renderLogs()"><option value="all">ทั้งหมด</option><option value="month" selected>รายเดือน</option><option value="year">รายปี</option></select>
                     <select id="filter-month" onchange="renderLogs()"><option value="0">มกราคม</option><option value="11" selected>ธันวาคม</option></select>
                     <select id="filter-year" onchange="renderLogs()"><option value="2568" selected>2568</option></select>
                     <button class="btn btn-primary" onclick="renderLogs()">ค้นหา</button>
                 </div>
-
                 <table>
                     <thead><tr><th>วัน-เวลา</th><th>ระบบ</th><th>รายการกิจกรรม</th><th>ผู้ป่วย</th><th>ผู้ทำรายการ</th></tr></thead>
                     <tbody id="main-log-body"></tbody>
@@ -235,20 +246,38 @@
             </div>
 
             <div id="settings" class="card">
-                <h3>ตั้งค่า</h3>
-                <div class="form-group"><label>Password ใหม่</label><input type="password" id="new-pass"></div>
-                <button class="btn btn-primary" onclick="changePass()">เปลี่ยนรหัส</button>
+                <h3><i class="fas fa-shield-alt"></i> ตั้งค่าระบบ</h3>
+                <div style="max-width:500px; margin-top:20px;">
+                    <div class="form-group">
+                        <label>ชื่อผู้ใช้งาน (Username) ใหม่</label>
+                        <input type="text" id="set-username" placeholder="ตั้งชื่อผู้ใช้ใหม่">
+                    </div>
+                    <div class="form-group">
+                        <label>รหัสผ่าน (Password) ใหม่</label>
+                        <input type="password" id="set-password" placeholder="ตั้งรหัสผ่านใหม่">
+                    </div>
+                    <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> บันทึกการเปลี่ยนแปลง
+                    </button>
+                    <p style="color:#888; font-size:0.8rem; margin-top:10px;">* ระบบจะจำค่า Username และ Password นี้ไว้สำหรับการเข้าใช้งานครั้งต่อไป</p>
+                </div>
             </div>
 
         </main>
     </div>
 
     <script>
-        // --- DATABASE ---
-        let config = { pass: localStorage.getItem('app_pass') || '0000' };
-        let currentUser = "";
+        // --- AUTH & CONFIG SYSTEM (LOCAL STORAGE) ---
+        let config = {
+            user: localStorage.getItem('app_user') || 'sabothospital1',
+            pass: localStorage.getItem('app_pass') || '0000'
+        };
+
         let currentPatient = null;
         let logsDatabase = [];
+
+        document.getElementById('username').value = config.user;
 
         // --- CORE UI ---
         function nav(page) {
@@ -256,27 +285,60 @@
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
             document.getElementById(page).classList.add('active');
             if(page === 'logs') renderLogs();
+            if(page === 'settings') {
+                document.getElementById('set-username').value = config.user;
+                document.getElementById('set-password').value = config.pass;
+            }
         }
         function updateClock() { document.getElementById('realtime-clock').innerText = new Date().toLocaleTimeString('th-TH'); }
         setInterval(updateClock, 1000);
+
+        // --- LOGIN LOGIC ---
         function login() {
-            if (/^sabothospital\d+$/.test(document.getElementById('username').value) && document.getElementById('password').value === config.pass) {
-                currentUser = document.getElementById('username').value;
+            const uInput = document.getElementById('username').value;
+            const pInput = document.getElementById('password').value;
+
+            if (uInput === config.user && pInput === config.pass) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app-container').style.display = 'flex';
+                document.getElementById('sidebar-user').innerText = config.user;
                 nav('dashboard');
-                addLog('ระบบ', 'เข้าสู่ระบบ', '-');
-            } else document.getElementById('login-error').innerText = 'Username/Password ไม่ถูกต้อง';
-        }
-        function logout() { location.reload(); }
-        function changePass() { 
-            const np = document.getElementById('new-pass').value;
-            if(np){ config.pass = np; localStorage.setItem('app_pass',np); alert('เปลี่ยนรหัสสำเร็จ'); }
+                addLog('ระบบ', 'เข้าสู่ระบบสำเร็จ', '-');
+            } else {
+                document.getElementById('login-error').innerText = 'Username หรือ Password ไม่ถูกต้อง';
+            }
         }
 
-        // --- LOGIC ---
+        function logout() { location.reload(); }
+
+        // --- FORGOT PASSWORD ---
+        function forgotPasswordLogic() {
+            let masterCode = prompt("กรุณากรอกรหัสปลดล็อคฉุกเฉิน (Master Code):\n(รหัสคือ: 0000)");
+            if (masterCode === '0000') {
+                config.pass = '0000';
+                localStorage.setItem('app_pass', '0000');
+                alert(`✅ ปลดล็อคสำเร็จ!\n\nUsername: ${config.user}\nPassword: 0000`);
+                document.getElementById('username').value = config.user;
+                document.getElementById('password').value = '0000';
+            } else if (masterCode !== null) {
+                alert("❌ รหัสปลดล็อคไม่ถูกต้อง!");
+            }
+        }
+
+        // --- SETTINGS ---
+        function saveSettings() {
+            const newUser = document.getElementById('set-username').value;
+            const newPass = document.getElementById('set-password').value;
+            if (!newUser || !newPass) { alert("กรุณากรอกข้อมูลให้ครบ"); return; }
+            config.user = newUser; config.pass = newPass;
+            localStorage.setItem('app_user', newUser); localStorage.setItem('app_pass', newPass);
+            alert("✅ บันทึกข้อมูลเรียบร้อย");
+            document.getElementById('sidebar-user').innerText = newUser;
+        }
+
+        // --- APP LOGIC ---
         function addLog(system, action, pt) {
-            logsDatabase.unshift({ id: Date.now(), date: new Date(), system, action, patient: pt||"-", staff: currentUser });
+            logsDatabase.unshift({ id: Date.now(), date: new Date(), system, action, patient: pt||"-", staff: config.user });
         }
         function renderLogs() {
             const view = document.getElementById('log-view-type').value;
@@ -284,13 +346,11 @@
             const y = parseInt(document.getElementById('filter-year').value) - 543;
             const tbody = document.getElementById('main-log-body');
             tbody.innerHTML = '';
-            
             const filtered = logsDatabase.filter(l => {
                 if(view==='all') return true;
                 if(view==='year') return l.date.getFullYear() === y;
                 return l.date.getFullYear() === y && l.date.getMonth() === m;
             });
-
             filtered.forEach(l => {
                 tbody.innerHTML += `<tr><td>${l.date.toLocaleString('th-TH')}</td><td><span class="status-badge bg-blue">${l.system}</span></td><td>${l.action}</td><td>${l.patient}</td><td>${l.staff}</td></tr>`;
             });
@@ -298,7 +358,11 @@
         }
 
         // --- ACTIONS ---
-        function smartCardSim() { document.getElementById('pt-name').value = "นายทดสอบ รักษาดี"; document.getElementById('pt-address').value = "123 ต.ในเมือง จ.ลพบุรี"; }
+        function smartCardSim() {
+            // ดึงข้อมูลมาใส่ (จะทับสิ่งที่พิมพ์ไว้)
+            document.getElementById('pt-name').value = "นายทดสอบ รักษาดี";
+            document.getElementById('pt-address').value = "123 ต.ในเมือง จ.ลพบุรี";
+        }
         function savePatient() {
             const n = document.getElementById('pt-name').value;
             if(!n) return alert('กรอกชื่อ');
@@ -322,116 +386,20 @@
         function logShift(t) { addLog('เวลาทำงาน', t, '-'); alert(t+' เรียบร้อย'); }
         function actionTransfer() { addLog('ย้ายรพ.', `Refer ไป ${document.getElementById('trans-dest').value}`, document.getElementById('trans-pt-name').value); alert('สำเร็จ'); }
 
-        // --- PRINT SYSTEM (NEW) ---
+        // --- PRINT SYSTEM ---
         function printWindow(title, content) {
             const w = window.open('', '', 'width=800,height=600');
-            w.document.write(`
-                <html><head><title>${title}</title>
-                <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
-                <style>
-                    body { font-family: 'Sarabun', sans-serif; padding: 20px; }
-                    .header { text-align: center; border-bottom: 2px solid black; padding-bottom: 10px; margin-bottom: 20px; }
-                    .content { font-size: 14px; line-height: 1.6; }
-                    .label-box { border: 1px solid black; padding: 15px; border-radius: 5px; width: 300px; margin: auto; }
-                    table { width: 100%; border-collapse: collapse; }
-                    th, td { border: 1px solid black; padding: 8px; text-align: left; }
-                    @media print { .no-print { display: none; } }
-                </style>
-                </head><body>
-                <div class="header">
-                    <h2>โรงพยาบาลซาบอท (SABOT HOSPITAL)</h2>
-                    <h4>${title}</h4>
-                </div>
-                <div class="content">${content}</div>
-                <div style="margin-top:40px; text-align:right;">
-                    <p>ลงชื่อเจ้าหน้าที่ ................................................</p>
-                    <p>(${currentUser})</p>
-                    <p>วันที่พิมพ์: ${new Date().toLocaleString('th-TH')}</p>
-                </div>
-                <script>window.print(); window.onafterprint = function(){ window.close(); }<\/script>
-                </body></html>
-            `);
+            w.document.write(`<html><head><title>${title}</title><link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet"><style>body{font-family:'Sarabun';padding:20px;}.header{text-align:center;border-bottom:2px solid black;margin-bottom:20px;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid black;padding:8px;}</style></head><body><div class="header"><h2>โรงพยาบาลซาบอท (SABOT HOSPITAL)</h2><h4>${title}</h4></div><div class="content">${content}</div><div style="margin-top:40px;text-align:right;"><p>ลงชื่อเจ้าหน้าที่ ....................................</p><p>(${config.user})</p></div><script>window.print();window.onafterprint=function(){window.close();}<\/script></body></html>`);
             w.document.close();
         }
+        function printPatient() { printWindow('บัตรบันทึกประวัติ (OPD)', `<p>ชื่อ: ${document.getElementById('pt-name').value}</p><p>ID: ${document.getElementById('pt-idcard').value}</p><p>ที่อยู่: ${document.getElementById('pt-address').value}</p><p>อาการ: ${document.getElementById('pt-symptom').value}</p>`); }
+        function printMedLabel() { printWindow('ฉลากยา', `<div style="border:1px solid #000;padding:15px;width:300px;margin:auto;"><p><b>ผู้ป่วย:</b> ${document.getElementById('med-pt-name').value}</p><hr><h2>${document.getElementById('med-name').value}</h2><p>${document.getElementById('med-prop').value}</p><p>จำนวน: ${document.getElementById('med-qty').value}</p></div>`); }
+        function printSurgery() { printWindow('ใบนัดผ่าตัด', `<p>ผู้ป่วย: ${document.getElementById('surg-pt-name').value}</p><p>วันที่: ${document.getElementById('surg-date').value}</p><p>ห้อง: ${document.getElementById('surg-room').value}</p>`); }
+        function printRefer() { printWindow('ใบส่งตัว', `<p>ส่งตัวผู้ป่วย: ${document.getElementById('trans-pt-name').value}</p><p>ไปยัง: ${document.getElementById('trans-dest').value}</p><p>สาเหตุ: ${document.getElementById('trans-reason').value}</p>`); }
+        function printLogReport() { printWindow('รายงานบันทึก', `<table border="1">${document.getElementById('main-log-body').innerHTML}</table>`); }
 
-        function printPatient() {
-            const n = document.getElementById('pt-name').value || "-";
-            const id = document.getElementById('pt-idcard').value || "-";
-            const add = document.getElementById('pt-address').value || "-";
-            const sym = document.getElementById('pt-symptom').value || "-";
-            printWindow('บัตรบันทึกประวัติผู้ป่วย (OPD Card)', `
-                <p><b>ชื่อ-สกุล:</b> ${n}</p>
-                <p><b>เลขบัตรประชาชน:</b> ${id}</p>
-                <p><b>ที่อยู่:</b> ${add}</p>
-                <p><b>อาการเบื้องต้น:</b> ${sym}</p>
-                <div style="text-align:center; margin-top:20px; border:1px solid #ccc; padding:10px;">
-                    |||||||||||||||||||||||||| <br> (Barcode: ${id})
-                </div>
-            `);
-        }
-
-        function printMedLabel() {
-            const pt = document.getElementById('med-pt-name').value || "ไม่ระบุ";
-            const drug = document.getElementById('med-name').value || "-";
-            const prop = document.getElementById('med-prop').value || "-";
-            const qty = document.getElementById('med-qty').value || "-";
-            printWindow('ฉลากยา (Drug Label)', `
-                <div class="label-box">
-                    <p><b>ชื่อผู้ป่วย:</b> ${pt}</p>
-                    <hr>
-                    <p style="font-size:1.2rem; font-weight:bold;">${drug}</p>
-                    <p><b>วิธีใช้:</b> ${prop}</p>
-                    <p><b>จำนวน:</b> ${qty}</p>
-                    <small>คำเตือน: ยานี้อาจทำให้ง่วงซึม</small>
-                </div>
-            `);
-        }
-
-        function printSurgery() {
-            const pt = document.getElementById('surg-pt-name').value;
-            const date = document.getElementById('surg-date').value;
-            const room = document.getElementById('surg-room').value;
-            printWindow('ใบนัดผ่าตัด (Surgery Appointment)', `
-                <p>ขอเชิญผู้ป่วย: <b>${pt}</b></p>
-                <p>เข้ารับการผ่าตัดในวันที่: <b>${date}</b></p>
-                <p>สถานที่: <b>ห้องผ่าตัด ${room}</b></p>
-                <p>โปรดงดน้ำและอาหารก่อนเวลาผ่าตัดอย่างน้อย 8 ชั่วโมง</p>
-            `);
-        }
-
-        function printRefer() {
-            const pt = document.getElementById('trans-pt-name').value;
-            const dest = document.getElementById('trans-dest').value;
-            const reason = document.getElementById('trans-reason').value;
-            printWindow('ใบส่งตัวผู้ป่วย (Referral Letter)', `
-                <p><b>เรียน:</b> ผู้อำนวยการ ${dest}</p>
-                <p><b>เรื่อง:</b> ขอส่งตัวผู้ป่วยเพื่อรับการรักษาต่อ</p>
-                <br>
-                <p>ข้าพเจ้าขอส่งตัวผู้ป่วยชื่อ: <b>${pt}</b></p>
-                <p><b>อายุ:</b> ${document.getElementById('trans-age').value} ปี</p>
-                <p><b>สาเหตุการส่งตัว/การวินิจฉัย:</b> ${reason}</p>
-                <p><b>การรักษาเบื้องต้น:</b> ให้ยาบรรเทาอาการและประเมินสัญญาณชีพปกติ</p>
-                <p>จึงเรียนมาเพื่อโปรดพิจารณารับผู้ป่วยรายนี้ไว้ในความดูแลต่อไป</p>
-            `);
-        }
-
-        function printLogReport() {
-            const tableContent = document.getElementById('main-log-body').innerHTML;
-            const view = document.getElementById('log-view-type').options[document.getElementById('log-view-type').selectedIndex].text;
-            printWindow(`รายงานบันทึกการใช้งานระบบ (${view})`, `
-                <table border="1" style="width:100%; border-collapse:collapse;">
-                    <thead>
-                        <tr style="background:#ddd;">
-                            <th>วัน-เวลา</th><th>ระบบ</th><th>รายการ</th><th>ผู้ป่วย</th><th>จนท.</th>
-                        </tr>
-                    </thead>
-                    <tbody>${tableContent}</tbody>
-                </table>
-            `);
-        }
-
-        // Mock Data for testing
-        logsDatabase.push({id:1, date:new Date(), system:'เวชระเบียน', action:'ลงทะเบียน', patient:'นายทดสอบ', staff:'admin'});
+        // Mock Data
+        logsDatabase.push({id:1, date:new Date(), system:'เวชระเบียน', action:'ทดสอบระบบ', patient:'-', staff:'System'});
     </script>
 </body>
 </html>
